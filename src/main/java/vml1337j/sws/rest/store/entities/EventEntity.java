@@ -38,7 +38,7 @@ public class EventEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "event", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<ResultEntity> racerEvents = new ArrayList<>();
+    private List<ResultEntity> results = new ArrayList<>();
 
     public void addRacers(List<RacerEntity> racers) {
         for (int i = 0; i < racers.size(); ) {
@@ -48,12 +48,12 @@ public class EventEntity {
 
     public void addRacer(RacerEntity racer, int position) {
         ResultEntity racerEvent = new ResultEntity(racer, this, position);
-        getRacerEvents().add(racerEvent);
-        racer.getRacerEvents().add(racerEvent);
+        getResults().add(racerEvent);
+        racer.getResults().add(racerEvent);
     }
 
     public List<RacerEntity> getRacers() {
-        return getRacerEvents().stream()
+        return getResults().stream()
                 .map(ResultEntity::getRacer)
                 .collect(Collectors.toList());
     }
