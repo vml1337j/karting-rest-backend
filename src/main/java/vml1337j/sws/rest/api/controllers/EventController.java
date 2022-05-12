@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import vml1337j.sws.rest.api.dto.EventDto;
 import vml1337j.sws.rest.api.dto.EventResultDto;
 import vml1337j.sws.rest.api.mappers.EventMapper;
+import vml1337j.sws.rest.api.services.EventService;
 import vml1337j.sws.rest.store.entities.EventEntity;
 
 import java.util.List;
@@ -19,20 +20,27 @@ public class EventController {
     public static final String GET_EVENT = "/api/v1/events/{event_id}";
     public static final String FETCH_EVENT_RESULTS = "/api/v1/events/{event_id}/results";
 
+    private final EventService eventService;
     private final EventMapper eventMapper;
 
     @GetMapping(FETCH_EVENTS)
     public List<EventDto> fetchEvents() {
-        return eventMapper.toEventDtoList(List.of());
+        return eventMapper.toEventDtoList(
+                eventService.getEvents()
+        );
     }
 
     @GetMapping(GET_EVENT)
     public EventDto getEventById(@PathVariable("event_id") Long eventId) {
-        return eventMapper.toEventDto(EventEntity.builder().build());
+        return eventMapper.toEventDto(
+                eventService.getEventById(eventId)
+        );
     }
 
     @GetMapping(FETCH_EVENT_RESULTS)
     public List<EventResultDto> fetchEventResultsById(@PathVariable("event_id") Long eventId) {
-        return eventMapper.toEventResultDtoList(List.of());
+        return eventMapper.toEventResultDtoList(
+                eventService.getEventResultsById(eventId)
+        );
     }
 }
