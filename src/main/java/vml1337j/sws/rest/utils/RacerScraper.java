@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class RacerScraper {
 
-    public static RacerEntity getRacer(Document racerPage) {
+    public RacerEntity getRacer(Document racerPage) {
         String shortProfileUrl = getShortProfileUrl(racerPage);
         return RacerEntity.builder()
                 .id(getId(shortProfileUrl))
@@ -22,11 +22,11 @@ public class RacerScraper {
                 .build();
     }
 
-    private static String getShortProfileUrl(Document racerPage) {
+    private String getShortProfileUrl(Document racerPage) {
         return racerPage.location().replaceAll("(?<=drivers/).+(?<=-)", "");
     }
 
-    private static long getId(String url) {
+    private long getId(String url) {
         Matcher matcher = Pattern.compile("\\d+(?=\\.)").matcher(url);
         if (!matcher.find()) {
             throw new RuntimeException("Illegal url");
@@ -35,29 +35,29 @@ public class RacerScraper {
         return Long.parseLong(matcher.group());
     }
 
-    private static String getFirstname(Document racerPage) {
+    private String getFirstname(Document racerPage) {
         return capitalize(getRacerInfo(racerPage, 1));
     }
 
-    private static String getLastname(Document racerPage) {
+    private String getLastname(Document racerPage) {
         return capitalize(getRacerInfo(racerPage, 0));
     }
 
-    private static String capitalize(String name) {
+    private String capitalize(String name) {
         return Character.toUpperCase(name.charAt(0)) + name.substring(1).toLowerCase();
     }
 
-    private static String getSwsId(Document racerPage) {
+    private String getSwsId(Document racerPage) {
         return getRacerInfo(racerPage, 2).substring(2);
     }
 
-    private static int getAge(Document racerPage) {
+    private int getAge(Document racerPage) {
         return Integer.parseInt(
                 getRacerInfo(racerPage, 3).replaceAll("\\D", "")
         );
     }
 
-    private static String getRacerInfo(Document racerPage, int indexElement) {
+    private String getRacerInfo(Document racerPage, int indexElement) {
         return racerPage.select("div#tmpl-detail-header-content-information strong")
                 .get(indexElement)
                 .nextSibling()
@@ -65,12 +65,12 @@ public class RacerScraper {
                 .trim();
     }
 
-    private static String getCountry(Document racerPage) {
+    private String getCountry(Document racerPage) {
         return racerPage.select("div#tmpl-detail-header-content-information span.country-flag")
                 .attr("title");
     }
 
-    private static long getPoints(Document racerPage) {
+    private long getPoints(Document racerPage) {
         String points = racerPage.select("div.tmpl-bloc-stats div")
                 .get(0).text();
 

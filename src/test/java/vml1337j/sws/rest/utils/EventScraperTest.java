@@ -16,6 +16,8 @@ import static org.mockito.Mockito.when;
 
 class EventScraperTest {
 
+    EventScraper eventScraper = new EventScraper();
+
     @Test
     void shouldReturnEventFromEventPage() {
         Document eventPage = mock(Document.class);
@@ -63,7 +65,7 @@ class EventScraperTest {
                                 1
                         )));
 
-        EventEntity actualEvent = EventScraper.getEvent(eventPage);
+        EventEntity actualEvent = eventScraper.getEvent(eventPage);
         assertEquals(expectedEvent, actualEvent);
     }
 
@@ -116,7 +118,7 @@ class EventScraperTest {
                                 3
                         )));
 
-        List<EventEntity> finishedEvents = EventScraper.getFinishedEventsFromTrack(trackPage);
+        List<EventEntity> finishedEvents = eventScraper.getFinishedEventsFromTrack(trackPage);
         assertEquals(3, finishedEvents.size());
     }
 
@@ -132,7 +134,7 @@ class EventScraperTest {
                                 3
                         )));
 
-        List<EventEntity> finishedEvents = EventScraper.getFinishedEventsByYear(trackPage, 1970);
+        List<EventEntity> finishedEvents = eventScraper.getFinishedEventsByYear(trackPage, 1970);
         assertEquals(3, finishedEvents.size());
     }
 

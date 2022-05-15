@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class EventScraper {
 
-    public static EventEntity getEvent(Document eventPage) {
+    public EventEntity getEvent(Document eventPage) {
         String url = getUrl(eventPage);
         EventEntity eventEntity = EventEntity.builder()
                 .id(getId(url))
@@ -24,7 +24,6 @@ public class EventScraper {
                 .category(getCategory(eventPage))
                 .date(getDate(eventPage))
                 .numberOfRacers(getNumberOfRacers(eventPage))
-                .isFilled(true)
                 .build();
 
         if (!eventEntity.getCategory().equals("Endurance CUP")) {
@@ -34,26 +33,26 @@ public class EventScraper {
         return eventEntity;
     }
 
-    public static List<EventEntity> getFinishedEventsFromTrack(Document trackPage) {
+    public List<EventEntity> getFinishedEventsFromTrack(Document trackPage) {
         Element finished = getEventTables(trackPage).last();
         return getEventFromTable(finished);
     }
 
-    public static List<EventEntity> getFinishedEventsByYear(Document trackPage, int year) {
+    public List<EventEntity> getFinishedEventsByYear(Document trackPage, int year) {
         Element finished = getEventTables(trackPage).last();
         return filterEventByYear(finished, year);
     }
 
-    public static List<RacerEntity> getRacers(Document eventPage) {
+    public List<RacerEntity> getRacers(Document eventPage) {
         return getRacerTable(eventPage)
                 .parallelStream()
-                .map(EventScraper::getRawRacer)
+                .map(this::getRawRacer)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toList());
     }
 
-    private static long getId(String url) {
+    private long getId(String url) {
         Matcher matcher = Pattern.compile("\\d+(?=\\.)").matcher(url);
         if (!matcher.find()) {
             throw new RuntimeException("Illegal url");
@@ -62,29 +61,29 @@ public class EventScraper {
         return Long.parseLong(matcher.group());
     }
 
-    private static String getTitle(Document eventPage) {
+    private String getTitle(Document eventPage) {
         return eventPage.select("h1#tmpl-detail-header-title").text();
     }
 
-    private static LocalDate getDate(Document eventPage) {
+    private LocalDate getDate(Document eventPage) {
         return LocalDate.parse(
                 eventPage.select("div#page-header-entity-info strong").text()
         );
     }
 
-    private static String getCategory(Document eventPage) {
+    private String getCategory(Document eventPage) {
         return eventPage.select("span.category-badge").text();
     }
 
-    private static int getNumberOfRacers(Document eventPage) {
+    private int getNumberOfRacers(Document eventPage) {
         return eventPage.select("div#race-detail-results tbody.rowlink tr").size();
     }
 
-    private static String getUrl(Document eventPage) {
+    private String getUrl(Document eventPage) {
         return eventPage.location();
     }
 
-    private static Optional<RacerEntity> getRawRacer(Element row) {
+    private Optional<RacerEntity> getRawRacer(Element row) {
         try {
             String shortUrl = getRacerProfileUrl(row);
             return Optional.of(
@@ -100,7 +99,7 @@ public class EventScraper {
         }
     }
 
-    private static RacerEntity.Gender getRacerGender(Element it) {
+    private RacerEntity.Gender getRacerGender(Element it) {
         String attrGender = it.select("i").attr("class");
         String gender = attrGender.replaceAll(".+(?<=-)", "");
         if (gender.equals("mars"))
@@ -109,31 +108,31 @@ public class EventScraper {
         return RacerEntity.Gender.FEMALE;
     }
 
-    private static String getRacerProfileUrl(Element it) {
+    private String getRacerProfileUrl(Element it) {
         return it.select("a").attr("href")
                 .replaceAll("(?<=drivers/).+(?<=-)", "");
     }
 
-    private static Elements getRacerTable(Document eventPage) {
+    private Elements getRacerTable(Document eventPage) {
         return eventPage.select("div#race-detail-results tbody.rowlink tr");
     }
 
-    private static List<EventEntity> getEventFromTable(Element table) {
+    private List<EventEntity> getEventFromTable(Element table) {
         return table.select("tr")
                 .stream()
-                .map(EventScraper::getRawEvent)
+                .map(this::getRawEvent)
                 .collect(Collectors.toList());
     }
 
-    private static List<EventEntity> filterEventByYear(Element table, int year) {
+    private List<EventEntity> filterEventByYear(Element table, int year) {
         return table.select("tr")
                 .stream()
                 .filter(tr -> filterByYear(tr, year))
-                .map(EventScraper::getRawEvent)
+                .map(this::getRawEvent)
                 .collect(Collectors.toList());
     }
 
-    private static EventEntity getRawEvent(Element tr) {
+    private EventEntity getRawEvent(Element tr) {
         String url = tr.attr("data-rowlink");
         LocalDate date = LocalDate.parse(tr.select("td").get(1).text());
         return EventEntity.builder()
@@ -144,12 +143,12 @@ public class EventScraper {
                 .build();
     }
 
-    private static boolean filterByYear(Element tr, int year) {
+    private boolean filterByYear(Element tr, int year) {
         LocalDate date = LocalDate.parse(tr.select("td").get(1).text());
         return date.getYear() == year;
     }
 
-    private static Elements getEventTables(Document trackPage) {
+    private Elements getEventTables(Document trackPage) {
         return trackPage.select("table#track-map-table tbody.rowlink");
     }
 }

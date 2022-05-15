@@ -12,6 +12,8 @@ import static org.mockito.Mockito.when;
 
 class RacerScraperTest {
 
+    RacerScraper racerScraper = new RacerScraper();
+
     @Test
     void shouldReturnRacerFromPage() {
         Document mockDoc = mock(Document.class);
@@ -48,7 +50,7 @@ class RacerScraperTest {
                         setPoints(1234L)
                 ));
 
-        RacerEntity actualRacer = RacerScraper.getRacer(mockDoc);
+        RacerEntity actualRacer = racerScraper.getRacer(mockDoc);
         assertEquals(expectedRacer, actualRacer);
     }
 
