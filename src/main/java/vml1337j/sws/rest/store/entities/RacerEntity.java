@@ -34,8 +34,6 @@ public class RacerEntity {
 
     private String country;
 
-    private Long points;
-
     @Column(unique = true)
     private String profileUrl;
 
@@ -46,10 +44,10 @@ public class RacerEntity {
     @Builder.Default
     @ToString.Exclude
     @OneToMany(mappedBy = "racer", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<ResultEntity> racerEvents = new ArrayList<>();
+    private List<ResultEntity> results = new ArrayList<>();
 
     public List<EventEntity> getEvents() {
-        return getRacerEvents().stream()
+        return getResults().stream()
                 .map(ResultEntity::getEvent)
                 .collect(Collectors.toList());
     }
