@@ -34,8 +34,6 @@ public class RacerEntity {
 
     private String country;
 
-    private Long points;
-
     @Column(unique = true)
     private String profileUrl;
 

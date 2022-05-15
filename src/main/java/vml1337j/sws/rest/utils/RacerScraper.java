@@ -17,7 +17,6 @@ public class RacerScraper {
                 .swsId(getSwsId(racerPage))
                 .age(getAge(racerPage))
                 .country(getCountry(racerPage))
-                .points(getPoints(racerPage))
                 .profileUrl(shortProfileUrl)
                 .build();
     }
@@ -68,15 +67,5 @@ public class RacerScraper {
     private String getCountry(Document racerPage) {
         return racerPage.select("div#tmpl-detail-header-content-information span.country-flag")
                 .attr("title");
-    }
-
-    private long getPoints(Document racerPage) {
-        String points = racerPage.select("div.tmpl-bloc-stats div")
-                .get(0).text();
-
-        if (points.equals("-"))
-            return 0;
-
-        return Long.parseLong(points);
     }
 }

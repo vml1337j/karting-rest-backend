@@ -17,5 +17,4 @@ public class RacerDto {
     private int age;
     private String gender;
     private String country;
-    private long points;
 }
