@@ -17,7 +17,7 @@ public class RacerController {
 
     public static final String FETCH_RACERS = "/api/v1/racers";
     public static final String GET_RACER = "/api/v1/racers/{racer_id}";
-    public static final String FETCH_RACER_EVENTS = "/api/v1/racers/{racer_id}/events";
+    public static final String FETCH_RACER_EVENTS = "/api/v1/racers/{racer_id}/results";
 
     private final RacerService racerService;
     private final RacerMapper racerMapper;
