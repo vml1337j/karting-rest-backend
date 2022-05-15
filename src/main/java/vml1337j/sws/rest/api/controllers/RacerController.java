@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import vml1337j.sws.rest.api.dto.RacerDto;
-import vml1337j.sws.rest.api.dto.RacerEventDto;
+import vml1337j.sws.rest.api.dto.RacerResultDto;
 import vml1337j.sws.rest.api.mappers.RacerMapper;
 import vml1337j.sws.rest.api.services.RacerService;
 
@@ -37,7 +37,7 @@ public class RacerController {
     }
 
     @GetMapping(FETCH_RACER_EVENTS)
-    public List<RacerEventDto> fetchRacerEventsById(@PathVariable("racer_id") Long racerId) {
+    public List<RacerResultDto> fetchRacerEventsById(@PathVariable("racer_id") Long racerId) {
         return racerMapper.toRacerResultDtoList(
                 racerService.getRacerResults(racerId)
         );

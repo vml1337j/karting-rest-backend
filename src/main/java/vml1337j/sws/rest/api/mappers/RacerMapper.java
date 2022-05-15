@@ -3,7 +3,7 @@ package vml1337j.sws.rest.api.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import vml1337j.sws.rest.api.dto.RacerDto;
-import vml1337j.sws.rest.api.dto.RacerEventDto;
+import vml1337j.sws.rest.api.dto.RacerResultDto;
 import vml1337j.sws.rest.store.entities.RacerEntity;
 import vml1337j.sws.rest.store.entities.ResultEntity;
 
@@ -16,12 +16,12 @@ public interface RacerMapper {
 
     List<RacerDto> toRacerDtoList(List<RacerEntity> entities);
 
-    List<RacerEventDto> toRacerResultDtoList(List<ResultEntity> entities);
+    List<RacerResultDto> toRacerResultDtoList(List<ResultEntity> entities);
 
     @Mapping(source = "event.id", target = "eventId")
     @Mapping(source = "event.title", target = "title")
     @Mapping(source = "event.date", target = "date")
     @Mapping(source = "event.category", target = "category")
-    RacerEventDto toRacerResultDto(ResultEntity entity);
+    RacerResultDto toRacerResultDto(ResultEntity entity);
 
 }
