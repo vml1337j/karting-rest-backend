@@ -8,7 +8,6 @@ import vml1337j.sws.rest.api.dto.EventDto;
 import vml1337j.sws.rest.api.dto.EventResultDto;
 import vml1337j.sws.rest.api.mappers.EventMapper;
 import vml1337j.sws.rest.api.services.EventService;
-import vml1337j.sws.rest.store.entities.EventEntity;
 
 import java.util.List;
 

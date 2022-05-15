@@ -40,9 +40,7 @@ public class EventService {
         List<EventEntity> events = eventRepository.findAll();
         
         if (events.isEmpty()) {
-            throw new EventNotFoundException(
-                    String.format("Events not found. Db probably empty")
-            );
+            throw new EventNotFoundException("Events not found. Db probably empty");
         }
 
         List<EventEntity> filledEvents = events.parallelStream()
