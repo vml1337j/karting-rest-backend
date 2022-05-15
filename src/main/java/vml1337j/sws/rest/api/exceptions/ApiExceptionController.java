@@ -23,4 +23,16 @@ public class ApiExceptionController {
 
         return new ResponseEntity<>(eventNotFound, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler({RacerNotFoundException.class})
+    public ResponseEntity<Object> handleRacerNotFoundException(RacerNotFoundException e) {
+        log.error(e.getMessage());
+
+        ApiErrorDto eventNotFound = new ApiErrorDto(
+                e.getMessage(),
+                Instant.now()
+        );
+
+        return new ResponseEntity<>(eventNotFound, HttpStatus.NOT_FOUND);
+    }
 }
