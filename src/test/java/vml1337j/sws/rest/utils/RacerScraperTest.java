@@ -26,7 +26,6 @@ class RacerScraperTest {
                 .swsId("TEST-CODE-1234")
                 .age(18)
                 .country("Country")
-                .points(1234L)
                 .build();
 
         when(mockDoc.location()).thenReturn("https://www.test.com/lang/drivers/full-name-racer-1234.html");
