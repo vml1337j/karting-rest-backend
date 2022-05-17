@@ -1,19 +1,19 @@
 package vml1337j.sws.rest.utils;
 
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.stereotype.Component;
 import vml1337j.sws.rest.store.entities.EventEntity;
 import vml1337j.sws.rest.store.entities.RacerEntity;
 
 import java.io.IOException;
 
-@Component
+@RequiredArgsConstructor
 public class SwsUtils {
 
-    private final EventScraper eventScraper = new EventScraper();
+    private final EventScraper eventScraper;
 
-    private final RacerScraper racerScraper = new RacerScraper();
+    private final RacerScraper racerScraper;
 
     public EventEntity fillEvent(EventEntity event) {
         Document eventPage = getPage(event.getUrl());
