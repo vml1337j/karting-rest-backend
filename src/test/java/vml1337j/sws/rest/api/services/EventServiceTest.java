@@ -105,7 +105,7 @@ class EventServiceTest {
     }
 
     @Test
-    void shouldCall_fillEvent_And_saveAndFlush_WhenSomeEventsAreNotFilled() {
+    void shouldCall_fillEvent_And_saveAllAndFlush_WhenSomeEventsAreNotFilled() {
         List<EventEntity> expectedEvents = List.of(
                 EventEntity.builder().id(1L).isFilled(true).build(),
                 EventEntity.builder().id(2L).isFilled(false).build(),
@@ -190,7 +190,7 @@ class EventServiceTest {
     }
 
     @Test
-    void shouldCall_fillEvent_And_saveAndFlush_WhenSomeRacersAreNotFilled() {
+    void shouldCall_fillRacer_And_saveAllAndFlush_WhenSomeRacersAreNotFilled() {
         EventEntity event = getEventEntityWithRacersAndResults();
 
         event.getRacers().get(0).setFilled(false);
