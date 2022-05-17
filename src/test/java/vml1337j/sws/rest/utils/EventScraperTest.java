@@ -29,7 +29,6 @@ class EventScraperTest {
                 .category("Event category")
                 .numberOfRacers(1)
                 .url("https://www.test.com/test-path/test-123.html")
-                .isFilled(true)
                 .build();
 
         expectedEvent.addRacers(
@@ -66,7 +65,13 @@ class EventScraperTest {
                         )));
 
         EventEntity actualEvent = eventScraper.getEvent(eventPage);
-        assertEquals(expectedEvent, actualEvent);
+
+        assertEquals(expectedEvent.getId(), actualEvent.getId());
+        assertEquals(expectedEvent.getTitle(), actualEvent.getTitle());
+        assertEquals(expectedEvent.getDate(), actualEvent.getDate());
+        assertEquals(expectedEvent.getCategory(), actualEvent.getCategory());
+        assertEquals(expectedEvent.getNumberOfRacers(), actualEvent.getNumberOfRacers());
+        assertEquals(expectedEvent.getUrl(), actualEvent.getUrl());
     }
 
     private Element setTitle(String title) {

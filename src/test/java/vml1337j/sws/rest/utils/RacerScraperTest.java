@@ -50,7 +50,14 @@ class RacerScraperTest {
                 ));
 
         RacerEntity actualRacer = racerScraper.getRacer(mockDoc);
-        assertEquals(expectedRacer, actualRacer);
+
+        assertEquals(expectedRacer.getId(), actualRacer.getId());
+        assertEquals(expectedRacer.getProfileUrl(), actualRacer.getProfileUrl());
+        assertEquals(expectedRacer.getLastname(), actualRacer.getLastname());
+        assertEquals(expectedRacer.getFirstname(), actualRacer.getFirstname());
+        assertEquals(expectedRacer.getSwsId(), actualRacer.getSwsId());
+        assertEquals(expectedRacer.getAge(), actualRacer.getAge());
+        assertEquals(expectedRacer.getCountry(), actualRacer.getCountry());
     }
 
     private Elements setRacerInfo(String lastname, String firstname, String swsId, int age) {
