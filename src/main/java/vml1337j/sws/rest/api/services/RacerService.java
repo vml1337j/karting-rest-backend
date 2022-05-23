@@ -1,6 +1,8 @@
 package vml1337j.sws.rest.api.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vml1337j.sws.rest.api.exceptions.RacerNotFoundException;
 import vml1337j.sws.rest.store.entities.EventEntity;
@@ -35,14 +37,14 @@ public class RacerService {
         return racer;
     }
 
-    public List<RacerEntity> getRacers() {
-        List<RacerEntity> racers = racerRepository.findAll();
+    public Page<RacerEntity> getRacers(Pageable pageable) {
+        Page<RacerEntity> racers = racerRepository.findAll(pageable);
 
         if (racers.isEmpty()) {
             throw new RacerNotFoundException("Racers not found. Db probably empty");
         }
 
-        List<RacerEntity> filledRacers = racers.parallelStream()
+        List<RacerEntity> filledRacers = racers.toList().parallelStream()
                 .filter(racer -> !racer.isFilled())
                 .map(swsUtils::fillRacer)
                 .collect(Collectors.toList());
