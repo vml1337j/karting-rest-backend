@@ -1,6 +1,8 @@
 package vml1337j.sws.rest.api.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vml1337j.sws.rest.api.exceptions.EventNotFoundException;
 import vml1337j.sws.rest.store.entities.EventEntity;
@@ -36,14 +38,13 @@ public class EventService {
         return event;
     }
 
-    public List<EventEntity> getEvents() {
-        List<EventEntity> events = eventRepository.findAll();
-        
+    public Page<EventEntity> getEvents(Pageable pageable) {
+        Page<EventEntity> events = eventRepository.findAll(pageable);
         if (events.isEmpty()) {
             throw new EventNotFoundException("Events not found. Db probably empty");
         }
 
-        List<EventEntity> filledEvents = events.parallelStream()
+        List<EventEntity> filledEvents = events.toList().parallelStream()
                 .filter(event -> !event.isFilled())
                 .map(swsUtils::fillEvent)
                 .collect(Collectors.toList());
