@@ -53,13 +53,13 @@ public class EventController {
                         eventService.getEventResultsById(eventId)
                 ).stream()
                 .map(result -> EntityModel.of(result,
-                        linkTo(methodOn(EventController.class).getEventById(eventId)).withRel("event"),
                         linkTo(methodOn(RacerController.class).getRacerById(result.getRacerId())).withRel("racer")
                 ))
                 .collect(Collectors.toList());
 
         return CollectionModel.of(results,
                 linkTo(methodOn(EventController.class).fetchEventResultsById(eventId)).withSelfRel(),
+                linkTo(methodOn(EventController.class).getEventById(eventId)).withRel("event"),
                 linkTo(methodOn(EventController.class).fetchEvents(Pageable.unpaged())).withRel("events")
         );
     }

@@ -52,13 +52,13 @@ public class RacerController {
         List<EntityModel<RacerResultDto>> results = racerMapper.toRacerResultDtoList(racerService.getRacerResults(racerId))
                 .stream()
                 .map(result -> EntityModel.of(result,
-                        linkTo(methodOn(RacerController.class).getRacerById(racerId)).withSelfRel(),
                         linkTo(methodOn(EventController.class).getEventById(result.getEventId())).withRel("event")
                 ))
                 .collect(Collectors.toList());
 
         return CollectionModel.of(results,
                 linkTo(methodOn(RacerController.class).fetchRacerEventsById(racerId)).withSelfRel(),
+                linkTo(methodOn(RacerController.class).getRacerById(racerId)).withRel("racer"),
                 linkTo(methodOn(RacerController.class).fetchRacers(Pageable.unpaged())).withRel("racers")
         );
     }
