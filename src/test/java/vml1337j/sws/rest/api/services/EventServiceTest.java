@@ -6,6 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import vml1337j.sws.rest.api.exceptions.EventNotFoundException;
 import vml1337j.sws.rest.store.entities.EventEntity;
 import vml1337j.sws.rest.store.entities.RacerEntity;
@@ -94,9 +97,9 @@ class EventServiceTest {
                 EventEntity.builder().id(1L).isFilled(true).build()
         );
 
-        when(eventRepository.findAll()).thenReturn(expectedEvents);
+        when(eventRepository.findAll(Pageable.unpaged())).thenReturn(new PageImpl<>(expectedEvents));
 
-        List<EventEntity> actualEvents = eventService.getEvents();
+        List<EventEntity> actualEvents = eventService.getEvents(Pageable.unpaged()).getContent();
 
         Assertions.assertNotNull(actualEvents);
 
@@ -112,9 +115,9 @@ class EventServiceTest {
                 EventEntity.builder().id(3L).isFilled(true).build()
         );
 
-        when(eventRepository.findAll()).thenReturn(expectedEvents);
+        when(eventRepository.findAll(Pageable.unpaged())).thenReturn(new PageImpl<>(expectedEvents));
 
-        List<EventEntity> actualEvents = eventService.getEvents();
+        List<EventEntity> actualEvents = eventService.getEvents(Pageable.unpaged()).getContent();
 
         Assertions.assertNotNull(actualEvents);
 
@@ -125,11 +128,11 @@ class EventServiceTest {
     @Test
     void shouldThrowEventNotFoundExceptionWhenDbEmpty() {
         String expectedExceptionMsg = "Events not found. Db probably empty";
-        when(eventRepository.findAll()).thenReturn(Collections.emptyList());
+        when(eventRepository.findAll(Pageable.unpaged())).thenReturn(Page.empty());
 
         EventNotFoundException actualException = Assertions.assertThrows(
                 EventNotFoundException.class,
-                () -> eventService.getEvents()
+                () -> eventService.getEvents(Pageable.unpaged())
         );
 
         Assertions.assertEquals(expectedExceptionMsg, actualException.getMessage());
