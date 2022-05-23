@@ -5,6 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import vml1337j.sws.rest.api.exceptions.RacerNotFoundException;
 import vml1337j.sws.rest.store.entities.EventEntity;
 import vml1337j.sws.rest.store.entities.RacerEntity;
@@ -85,9 +88,9 @@ class RacerServiceTest {
                 RacerEntity.builder().id(123L).isFilled(true).build()
         );
 
-        when(racerRepository.findAll()).thenReturn(racers);
+        when(racerRepository.findAll(Pageable.unpaged())).thenReturn(new PageImpl<>(racers));
 
-        List<RacerEntity> actualRacers = racerService.getRacers();
+        List<RacerEntity> actualRacers = racerService.getRacers(Pageable.unpaged()).getContent();
 
         assertNotNull(actualRacers);
 
@@ -103,9 +106,9 @@ class RacerServiceTest {
                 RacerEntity.builder().id(123L).isFilled(false).build()
         );
 
-        when(racerRepository.findAll()).thenReturn(racers);
+        when(racerRepository.findAll(Pageable.unpaged())).thenReturn(new PageImpl<>(racers));
 
-        List<RacerEntity> actualRacers = racerService.getRacers();
+        List<RacerEntity> actualRacers = racerService.getRacers(Pageable.unpaged()).getContent();
 
         verify(swsUtils, times(2)).fillRacer(any());
         verify(racerRepository, times(1)).saveAllAndFlush(any());
@@ -115,11 +118,11 @@ class RacerServiceTest {
     void shouldThrowRacerNotFoundWhenDbEmpty() {
         String expectedExceptionMsg = "Racers not found. Db probably empty";
 
-        when(racerRepository.findAll()).thenReturn(Collections.emptyList());
+        when(racerRepository.findAll(Pageable.unpaged())).thenReturn(Page.empty());
 
         RacerNotFoundException actualException = assertThrows(
                 RacerNotFoundException.class,
-                () -> racerService.getRacers()
+                () -> racerService.getRacers(Pageable.unpaged())
         );
 
         assertEquals(expectedExceptionMsg, actualException.getMessage());
