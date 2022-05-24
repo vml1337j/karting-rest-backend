@@ -7,6 +7,7 @@ import vml1337j.sws.rest.store.entities.EventEntity;
 import vml1337j.sws.rest.store.entities.RacerEntity;
 
 import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class SwsUtils {
@@ -32,6 +33,10 @@ public class SwsUtils {
         filledRacer.setGender(racer.getGender());
 
         return filledRacer;
+    }
+
+    public List<EventEntity> getNextScheduledEvent(String trackUrl) {
+        return eventScraper.getScheduledEvent(getPage(trackUrl));
     }
 
     public Document getPage(String url) {
