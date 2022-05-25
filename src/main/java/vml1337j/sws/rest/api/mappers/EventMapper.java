@@ -11,6 +11,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface EventMapper {
+    @Mapping(source = "url", target = "eventPageUrl")
     EventDto toEventDto(EventEntity entity);
 
     List<EventDto> toEventDtoList(List<EventEntity> entities);

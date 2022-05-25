@@ -17,4 +17,5 @@ public class EventDto {
     private String category;
     private LocalDate date;
     private int numberOfRacers;
+    private String eventPageUrl;
 }
