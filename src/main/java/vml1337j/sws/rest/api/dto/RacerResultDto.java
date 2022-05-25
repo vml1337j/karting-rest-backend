@@ -12,8 +12,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RacerResultDto {
-    private int position;
     private long eventId;
+    private int position;
     private String title;
     private LocalDate date;
     private String category;

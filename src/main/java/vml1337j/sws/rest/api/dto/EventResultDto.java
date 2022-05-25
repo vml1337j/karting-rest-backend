@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventResultDto {
-    private int position;
     private long racerId;
+    private int position;
     private String firstname;
     private String lastname;
     private String gender;
