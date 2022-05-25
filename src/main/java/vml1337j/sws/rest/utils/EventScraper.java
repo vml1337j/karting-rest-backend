@@ -1,10 +1,10 @@
 package vml1337j.sws.rest.utils;
 
-import vml1337j.sws.rest.store.entities.EventEntity;
-import vml1337j.sws.rest.store.entities.RacerEntity;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import vml1337j.sws.rest.store.entities.EventEntity;
+import vml1337j.sws.rest.store.entities.RacerEntity;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -150,5 +150,13 @@ public class EventScraper {
 
     private Elements getEventTables(Document trackPage) {
         return trackPage.select("table#track-map-table tbody.rowlink");
+    }
+
+    public List<EventEntity> getScheduledEvent(Document trackPage) {
+        Element scheduledTable = getEventTables(trackPage).first();
+        return scheduledTable.select("tr")
+                .stream().limit(2)
+                .map(this::getRawEvent)
+                .collect(Collectors.toList());
     }
 }
