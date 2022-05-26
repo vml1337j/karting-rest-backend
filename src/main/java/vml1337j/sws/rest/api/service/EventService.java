@@ -1,10 +1,10 @@
-package vml1337j.sws.rest.api.services;
+package vml1337j.sws.rest.api.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import vml1337j.sws.rest.api.exceptions.EventNotFoundException;
+import vml1337j.sws.rest.api.exception.EventNotFoundException;
 import vml1337j.sws.rest.store.entities.EventEntity;
 import vml1337j.sws.rest.store.entities.RacerEntity;
 import vml1337j.sws.rest.store.entities.ResultEntity;

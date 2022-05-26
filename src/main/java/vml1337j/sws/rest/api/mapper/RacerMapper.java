@@ -1,4 +1,4 @@
-package vml1337j.sws.rest.api.mappers;
+package vml1337j.sws.rest.api.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

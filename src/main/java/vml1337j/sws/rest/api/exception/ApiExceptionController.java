@@ -1,4 +1,4 @@
-package vml1337j.sws.rest.api.exceptions;
+package vml1337j.sws.rest.api.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

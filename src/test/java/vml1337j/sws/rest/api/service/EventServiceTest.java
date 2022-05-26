@@ -1,4 +1,4 @@
-package vml1337j.sws.rest.api.services;
+package vml1337j.sws.rest.api.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import vml1337j.sws.rest.api.exceptions.EventNotFoundException;
+import vml1337j.sws.rest.api.exception.EventNotFoundException;
 import vml1337j.sws.rest.store.entities.EventEntity;
 import vml1337j.sws.rest.store.entities.RacerEntity;
 import vml1337j.sws.rest.store.entities.ResultEntity;

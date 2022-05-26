@@ -1,4 +1,4 @@
-package vml1337j.sws.rest.api.exceptions;
+package vml1337j.sws.rest.api.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -3,7 +3,7 @@ package vml1337j.sws.rest.api.schedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
-import vml1337j.sws.rest.api.exceptions.EventNotFoundException;
+import vml1337j.sws.rest.api.exception.EventNotFoundException;
 import vml1337j.sws.rest.store.entities.EventEntity;
 import vml1337j.sws.rest.store.repositories.EventRepository;
 import vml1337j.sws.rest.utils.SwsUtils;
