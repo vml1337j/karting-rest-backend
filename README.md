@@ -115,7 +115,7 @@ _(Ответ сервера имеет тип [hal+json](https://ru.wikipedia.or
 
 ## Endpoints
 
-К проекту подключен Swagger. Запустив **проект**, можно воспользоваться  
+К проекту подключен Swagger. [**Запустив проект**](#how-to-run), можно воспользоваться  
 _"юаем"_, который расположен на http://localhost:8080/swagger-ui/index.html.
 
 ### EventController  
